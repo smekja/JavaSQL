@@ -52,13 +52,18 @@ public class Datasource {
     public static final String QUERY_ARTIST_FOR_SONG_SORT = " ORDER BY " + TABLE_ARTISTS + "." + COLUMN_ARTIST_NAME + ", "
             + TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME + " COLLATE NOCASE ";
     public static final String TABLE_ARTIST_SONG_VIEW = "artist_list";
-    public static final String CREATE_ARTIST_FOR_SONG_VIEW = "CREATE VIEW IF NOT EXISTS artist_list AS SELECT" +
-            " artists.name AS artist, albums.name AS album, songs.track AS track, songs.title AS title FROM songs INNER JOIN albums" +
-            " ON songs.album = albums._id INNER JOIN artists ON albums.artist = artists._id ORDER BY artists.name," +
-            " albums.name, songs.track COLLATE NOCASE";
+    public static final String CREATE_ARTIST_FOR_SONG_VIEW = "CREATE VIEW IF NOT EXISTS artist_list AS SELECT "
+            + TABLE_ARTISTS + "." + COLUMN_ALBUM_ARTIST + ", " + TABLE_ALBUMS + "." + COLUMN_ARTIST_NAME + " AS " + COLUMN_SONG_ALBUM
+            + ", " + TABLE_SONGS + "." + COLUMN_SONG_TRACK + " AS " + COLUMN_SONG_TRACK + ", " + TABLE_SONGS + "." + COLUMN_SONG_TITLE
+            + " AS " + COLUMN_SONG_TITLE + " FROM " + TABLE_SONGS + " INNER JOIN " + TABLE_ALBUMS + " ON " + TABLE_SONGS + "." + COLUMN_SONG_ALBUM
+            + " = " + TABLE_ALBUMS + "." + COLUMN_ALBUM_ID + " INNER JOIN " + TABLE_ARTISTS + " ON " + TABLE_ALBUMS + "." + COLUMN_ALBUM_ARTIST
+            + " = " + TABLE_ARTISTS + "." + COLUMN_ARTIST_ID + " ORDER BY " + TABLE_ARTISTS + "." + COLUMN_ARTIST_NAME + ", "
+            + TABLE_ALBUMS + "." + COLUMN_ARTIST_NAME + ", " + TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME + ", " + TABLE_SONGS + "." + COLUMN_SONG_TRACK
+            + " COLLATE NOCASE";
+
     public static final String QUERY_VIEW_SONG_INFO = "SELECT artist, album, track FROM artist_list WHERE title = \"";
 
-    public static final String QUERY_VIEW_SONG_INFO_PREP = "SELECT artist, album, track FROM artist_list WHERE title = ?";
+    public static final String QUERY_VIEW_SONG_INFO_PREP = "SELECT artist, album, track FROM artist_list WHERE title = ? COLLATE NOCASE";
 
     public static final String INSERT_ARTIST = "INSERT INTO " + TABLE_ARTISTS + "(" + COLUMN_ARTIST_NAME + ") VALUES (?)";
     public static final String INSERT_ALBUM = "INSERT INTO " + TABLE_ALBUMS + "(" + COLUMN_ALBUM_NAME + ", " + COLUMN_ALBUM_ARTIST
