@@ -2,4 +2,4 @@
 
 Trying JDBC driver for SQlite. 
 
-Simple queries, transactions, CRUD.
+Simple queries, transactions, CRUD, PreparedStatement
